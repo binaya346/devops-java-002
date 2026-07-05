@@ -18,6 +18,7 @@ pipeline {
           CI_IMAGE = "${APP_NAME}:ci-${env.BUILD_NUMBER}"
       }                                                                                                                            
    
+   
       stages {                                                                                                                     
                   
           stage('📋 Pipeline Info') {                                                                                              
