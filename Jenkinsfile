@@ -15,7 +15,7 @@ pipeline {
                                                                                                                                    
       environment {
           APP_NAME = 'java-app'
-          CI_IMAGE = "${APP_NAME}:ci-${env.BUILD_NUMBER}"
+          CI_IMAGE = "${APP_NAME}:ci-${env.GIT_COMMIT.take(7)}"
       }                                                                                                                            
    
    
@@ -56,7 +56,7 @@ pipeline {
                       echo "✅ Quality all good"
                   '''                                                                                                              
               }  
-          }      
+          }     
 
           stage('🐳 Docker Build') {                                                                                               
               steps {

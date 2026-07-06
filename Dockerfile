@@ -24,9 +24,9 @@ COPY --from=build_stage /app/target/*.jar app.jar
 
 # Step D: Security - Create a non-root user
 # In production, we never run applications as 'root' to prevent hacking.
-RUN addgroup -S devopsgroup && adduser -S devopsuser -G devopsgroup
-RUN chown devopsuser:devopsgroup app.jar
-USER devopsuser
+# RUN addgroup -S devopsgroup && adduser -S devopsuser -G devopsgroup
+# RUN chown devopsuser:devopsgroup app.jar
+# USER devopsuser
 
 # Step E: Execution
 EXPOSE 8080
