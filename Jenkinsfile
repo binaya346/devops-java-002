@@ -16,6 +16,12 @@ pipeline {
       environment {
           APP_NAME = 'java-app'
           CI_IMAGE = "${APP_NAME}:ci-${env.GIT_COMMIT.take(7)}"
+
+          // Stable identity for the project created/shown in SonarQube.
+          // The Jenkins SonarQube installation supplies SONAR_HOST_URL and
+          // SONAR_AUTH_TOKEN during the analysis stage.
+          SONAR_PROJECT_KEY = 'techaxis:devopsclass'
+          SONAR_PROJECT_NAME = 'DevOps Class Java Application'
       }                                                                                                                            
    
    
@@ -49,14 +55,37 @@ pipeline {
               }   
           }                                                                                                                         
    
-          stage('🔍 Code Quality') {
+          stage('🔍 SonarQube Analysis') {
+              agent {
+                  docker {
+                      image 'eclipse-temurin:25-jdk-alpine'
+                      reuseNode true
+                  }
+              }
               steps {
-                  sh '''
-                      echo "Checking Code quality"                                                                                                                                                                       
-                      echo "✅ Quality all good"
-                  '''                                                                                                              
+                  withSonarQubeEnv('sonarqube') {
+                      sh '''
+                          ./mvnw -B \
+                            -Dmaven.repo.local="$WORKSPACE/.m2/repository" \
+                            -DskipTests \
+                            clean verify \
+                            org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+                            -Dsonar.projectKey="$SONAR_PROJECT_KEY" \
+                            -Dsonar.projectName="$SONAR_PROJECT_NAME"
+                      '''
+                  }
               }  
-          }     
+          }
+
+          stage('🚦 Quality Gate') {
+              // Requires the SonarQube webhook configured in Jenkins setup.
+              agent none
+              steps {
+                  timeout(time: 5, unit: 'MINUTES') {
+                      waitForQualityGate abortPipeline: true
+                  }
+              }
+          }
 
           stage('🐳 Docker Build') {                                                                                               
               steps {
