@@ -29,7 +29,6 @@ public class DemoIssuesController {
         if (input == defaultRole) {
             System.out.println("User is admin");
         }
-        
 
         // 🔴 4. BUG: Guaranteed NullPointerException (NPE)
         String nullableValue = null;
