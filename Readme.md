@@ -3,3 +3,7 @@ Nginx homebrew command
 
 Starting the java application
 `SERVER_PORT=8090 ./mvnw spring-boot:run`
+
+
+Nexus
+`./mvnw -s .mvn/settings.xml clean deploy -DskipTests`

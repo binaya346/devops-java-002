@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0
+                              https://maven.apache.org/xsd/settings-1.2.0.xsd">
+
+  <!-- =================================================================
+       SERVERS: Credentials for deploying/pushing artifacts to Nexus.
+       The IDs here must match the <repository><id> in pom.xml.
+       ================================================================= -->
+  <servers>
+    <server>
+      <id>nexus-mirror</id>
+      <username>admin</username>
+      <password>Huawei@100</password>
+    </server>
+    <server>
+      <id>nexus-releases</id>
+      <username>admin</username>
+      <password>Huawei@100</password>
+    </server>
+    <server>
+      <id>nexus-snapshots</id>
+      <username>admin</username>
+      <password>Huawei@100</password>
+    </server>
+  </servers>
+
+  <!-- =================================================================
+       MIRRORS: Route all dependency downloads through Nexus maven-public.
+       ================================================================= -->
+  <mirrors>
+    <mirror>
+      <id>nexus-mirror</id>
+      <name>Nexus Repository Manager</name>
+      <url>http://localhost:8081/repository/maven-public/</url>
+      <mirrorOf>*</mirrorOf>
+    </mirror>
+  </mirrors>
+
+</settings>
