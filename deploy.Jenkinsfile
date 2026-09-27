@@ -31,7 +31,7 @@ pipeline {
         APP_PORT        = '8080'
         
         // .env file path on production server
-        ENV_FILE        = '/home/ubuntu/opt/deployment/.env'
+        ENV_FILE        = '/home/ubuntu/deployment/.env'
     }
 
     stages {
